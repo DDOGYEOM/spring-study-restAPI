@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.openobject.restapi.mappers.boardMapper">
+	<select id="boardCount" resultType="Integer">
+		SELECT count(*) FROM
+		test_board;
+	</select>
+
+	<select id="boardAll" parameterType="Integer"
+		resultType="com.openobject.restapi.domain.BoardVO">
+		SELECT * FROM test_board ORDER BY post_date DESC LIMIT
+		#{page}, 10;
+	</select>
+
+	<select id="boardDetail" parameterType="Integer"
+		resultType="com.openobject.restapi.domain.BoardVO">
+		SELECT * FROM test_board WHERE id = #{boardId} ;
+	</select>
+
+	<insert id="boardWrite" parameterType="com.openobject.restapi.domain.BoardVO" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+		test_board(title, content, writer, writer_id) VALUES
+		('${title}', '${content}', '${writer}',
+		'${writerId}')
+	</insert>
+
+	<update id="boardModify" parameterType="com.openobject.restapi.domain.BoardVO">
+		UPDATE test_board SET
+		title = '${title}', content = '${content}' WHERE id = ${id}
+	</update>
+
+	<delete id="boardDelete" parameterType="Integer">
+		DELETE FROM test_board
+		WHERE id = ${boardId}
+	</delete>
+
+
+</mapper>
